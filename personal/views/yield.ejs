@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoHarvest | Crop Optimization</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/yield.css">
+</head>
+<body>
+    <div id="grow-overlay" class="grow-overlay">
+        <div class="seed">
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+            <div class="pod"></div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="top-bar">
+            <div class="brand-block">
+                <div class="logo">
+                    <i class="fa-solid fa-seedling"></i> EcoHarvest<span>AI</span>
+                </div>
+                <span class="tagline">Uniting Farmers + Tech</span>
+            </div>
+            <div class="top-actions">
+                <button class="icon-btn" id="searchBtn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <div class="nav-actions">
+                    <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">🌙</button>
+                    <button class="btn-secondary" id="profileBtn" aria-haspopup="true" aria-expanded="false">Profile</button>
+                    <div id="profileCard" class="profile-card hidden" role="dialog" aria-label="Profile information">
+                        <div class="profile-top">
+                            <div class="avatar">👩‍🌾</div>
+                            <div>
+                                <h4 id="profileName"><%= user?.name || 'Farmer' %></h4>
+                                <p id="profileEmail"><%= user?.email || '' %></p>
+                            </div>
+                        </div>
+                        <div class="profile-meta">
+                            <span>Farm Region</span>
+                            <strong>Andhra Pradesh</strong>
+                        </div>
+                        <button class="btn-primary small" id="logoutBtn">Log out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sub-bar">
+            <ul class="nav-links">
+                <li class="active" onclick="showPage('home')">Home</li>
+                <li onclick="showPage('predict')">Predict Yield</li>
+                <li onclick="showPage('dashboard')">Analytics</li>
+            </ul>
+            <button class="ghost-cta">
+                <i class="fa-solid fa-location-dot"></i> Find My Farm Hub
+            </button>
+        </div>
+    </nav>
+
+    <main id="app">
+        <section id="home" class="page active-page">
+            <div class="hero">
+                <div class="hero-content">
+                    <p class="eyebrow">Tech Trends, Yield + Insights</p>
+                    <h1>Learn. Grow. <br><span>Build your harvest.</span></h1>
+                    <p class="hero-sub">Monitor soil health, forecast yield potential, and discover smarter planting decisions with EcoHarvest AI.</p>
+                    <div class="hero-actions">
+                        <button class="btn-primary" onclick="showPage('predict')">Start Analysis <i class="fa-solid fa-arrow-right"></i></button>
+                        <button class="btn-outline" onclick="showPage('dashboard')">View Analytics</button>
+                    </div>
+                    <div class="hero-metrics">
+                        <div><strong>1.3M</strong><span>Soil readings</span></div>
+                        <div><strong>33.9K</strong><span>Smart farms</span></div>
+                        <div><strong>238K</strong><span>Local + remote plots</span></div>
+                    </div>
+                </div>
+                <div class="hero-media">
+                    <div class="media-card">
+                        <div class="media-header">
+                            <span>AI Yield Radar</span>
+                            <small>Live insights</small>
+                        </div>
+                        <div class="media-chart">
+                            <div class="bar-pill" style="height: 40%;"></div>
+                            <div class="bar-pill" style="height: 70%;"></div>
+                            <div class="bar-pill" style="height: 55%;"></div>
+                            <div class="bar-pill" style="height: 85%;"></div>
+                        </div>
+                        <div class="media-tags">
+                            <span>Rice</span>
+                            <span>Wheat</span>
+                            <span>Maize</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="predict" class="page">
+            <div class="predict-wrap">
+            <div class="container panel">
+                <div class="header-box">
+                    <h2>Crop Yield Prediction</h2>
+                    <p>Enter your soil and environmental parameters below.</p>
+                </div>
+
+                <div class="form-grid">
+                    <form id="yieldForm" class="form-card">
+                        <div class="input-group">
+                            <label>Nitrogen (N)</label>
+                            <input type="number" id="nitrogen" placeholder="e.g. 90" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Phosphorus (P)</label>
+                            <input type="number" id="phosphorus" placeholder="e.g. 42" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Potassium (K)</label>
+                            <input type="number" id="potassium" placeholder="e.g. 43" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Temperature (°C)</label>
+                            <input type="number" id="temperature" placeholder="e.g. 20.8" step="0.1" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Humidity (%)</label>
+                            <input type="number" id="humidity" placeholder="e.g. 82" required>
+                        </div>
+                        <div class="input-group">
+                            <label>pH Value</label>
+                            <input type="number" id="ph_value" placeholder="e.g. 6.5" step="0.1" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Rainfall (mm)</label>
+                            <input type="number" id="rainfall" placeholder="e.g. 202" required>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                <span class="btn-text">Run Model</span>
+                                <div class="loader" id="loader"></div>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="resultCard" class="result-card hidden">
+                        <div class="result-header">
+                            <div class="result-icon" aria-hidden="true">
+                                <i class="fa-solid fa-seedling"></i>
+                            </div>
+                            <div class="result-info">
+                                <p class="result-kicker">Prediction Complete</p>
+                                <h3 class="result-crop" id="cropSuggestion">Rice</h3>
+                                <p class="result-sub">Recommended crop based on your current soil and climate inputs.</p>
+                            </div>
+                        </div>
+                        <div class="recommendations">
+                            <h4><i class="fa-solid fa-lightbulb"></i> AI Recommendations:</h4>
+                            <ul id="recList"></ul>
+                        </div>
+                    </div>
+
+                    <div id="tipsCard" class="tips-card hidden">
+                        <div class="tips-head">
+                            <i class="fa-solid fa-seedling"></i>
+                            <div>
+                                <h4>Field Tips & Timing</h4>
+                                <p>What to add, when to add, and how to apply.</p>
+                            </div>
+                        </div>
+                        <div id="tipsList" class="tips-list"></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="page">
+            <div class="container">
+                <h2>Farm Analytics</h2>
+                <div class="dashboard-grid">
+                    <div class="dash-card">
+                        <h3>Soil Health Trends</h3>
+                        <div class="chart-container">
+                            <div class="bar" style="height: 60%;" title="Jan"></div>
+                            <div class="bar" style="height: 80%;" title="Feb"></div>
+                            <div class="bar" style="height: 45%;" title="Mar"></div>
+                            <div class="bar" style="height: 90%;" title="Apr"></div>
+                            <div class="bar" style="height: 70%;" title="May"></div>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <h3>Recent Predictions</h3>
+                        <table class="simple-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Crop</th>
+                                    <th>Yield</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (predictions && predictions.length) { %>
+                                    <% predictions.forEach((row) => { %>
+                                        <tr>
+                                            <td><%= new Date(row.created_at).toLocaleDateString() %></td>
+                                            <td><%= row.crop %></td>
+                                            <td><%= row.yield %> T/Ha</td>
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td>Today</td>
+                                        <td>Wheat</td>
+                                        <td>4.2 T/Ha</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Yesterday</td>
+                                        <td>Maize</td>
+                                        <td>7.1 T/Ha</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Oct 24</td>
+                                        <td>Rice</td>
+                                        <td>3.8 T/Ha</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/yield.js"></script>
+</body>
+</html>

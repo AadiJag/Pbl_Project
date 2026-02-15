@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoHarvest AI | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/login.css">
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <main class="auth-shell">
+        <section class="brand">
+            <div class="logo"><i class="fa-solid fa-seedling"></i> EcoHarvest<span>AI</span></div>
+            <h1>Precision farming starts here.</h1>
+            <p>Log in to access your yield predictions, farm analytics, and crop insights.</p>
+            <div class="pill">Trusted by 500+ farms</div>
+            <ul class="bullets">
+                <li><i class="fa-regular fa-circle-check"></i> 98% accurate yield forecasts</li>
+                <li><i class="fa-regular fa-circle-check"></i> Weather-aware irrigation cues</li>
+                <li><i class="fa-regular fa-circle-check"></i> Multi-farm dashboard</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <h2>Welcome back</h2>
+                <p>Use your farm account to continue</p>
+            </div>
+            <form id="loginForm" method="POST" action="/login" novalidate>
+                <label>Email</label>
+                <div class="input">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" id="email" name="email" placeholder="farmer@domain.com" required>
+                </div>
+
+                <label>Password</label>
+                <div class="input">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required minlength="6">
+                    <button type="button" id="togglePwd" aria-label="Show password"><i class="fa-regular fa-eye"></i></button>
+                </div>
+
+                <div class="actions">
+                    <label class="remember"><input type="checkbox" id="remember"> Remember me</label>
+                    <a href="#" class="muted">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <span class="btn-text">Sign In</span>
+                    <div class="loader" id="loader"></div>
+                </button>
+
+                <% if (error) { %>
+                    <p class="alert"><%= error %></p>
+                <% } %>
+            </form>
+        </section>
+    </main>
+
+    <script src="/login.js"></script>
+</body>
+</html>
