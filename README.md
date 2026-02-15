@@ -85,10 +85,5 @@ personal/
 
 Rahul , Aaditya Jagdesh
 BTech Computer Science Engineering
-AI + Software Engineering Project
 
 ⸻
-
-⭐ License
-
-This project is for educational and research purposes.
