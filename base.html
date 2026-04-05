@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EcoHarvest | Premium AI Agronomy{% endblock %}</title>
+    <meta name="description" content="{% block meta_desc %}EcoHarvest — AI-powered precision agriculture platform for optimal crop recommendation.{% endblock %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Aurora Background -->
+    <div class="aurora-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-inner">
+            <a href="{{ url_for('home') }}" class="nav-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EcoHarvest Logo" class="nav-logo-img">
+                <span class="logo-text">EcoHarvest</span><span class="logo-dot">.</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="{{ url_for('home') }}" class="nav-link {% if active_page == 'home' %}active{% endif %}">
+                    <i class="fa-solid fa-house"></i> Home
+                </a>
+                <a href="{{ url_for('predict_page') }}" class="nav-link {% if active_page == 'predict' %}active{% endif %}">
+                    <i class="fa-solid fa-seedling"></i> Predict
+                </a>
+                <a href="{{ url_for('about') }}" class="nav-link {% if active_page == 'about' %}active{% endif %}">
+                    <i class="fa-solid fa-circle-info"></i> About
+                </a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <main class="page-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="logo-text">EcoHarvest</span><span class="logo-dot">.</span>
+                <p class="footer-tagline">AI-Powered Precision Agriculture</p>
+            </div>
+            <div class="footer-links">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('predict_page') }}">Predict</a>
+                <a href="{{ url_for('about') }}">About</a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; 2026 EcoHarvest AI Systems | Data Powered by Precision Agriculture</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shared Scripts -->
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+        // Mobile toggle
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('nav-open');
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

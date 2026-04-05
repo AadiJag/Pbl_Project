@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Predict — EcoHarvest{% endblock %}
+{% block meta_desc %}Enter your soil and climate parameters to get an AI-powered crop recommendation from EcoHarvest.{% endblock %}
+
+{% block content %}
+
+<section class="predict-page">
+    <div class="predict-header">
+        <div class="badge-pill">
+            <i class="fa-solid fa-flask-vial"></i> AI Analysis Engine
+        </div>
+        <h1 class="predict-title">Crop Recommendation</h1>
+        <p class="predict-sub">Enter your soil composition and climate data below for a precision recommendation.</p>
+    </div>
+
+    <div class="predict-wrapper">
+        <!-- Form Panel -->
+        <div class="form-panel glass-card">
+            <form id="predictionForm">
+                <div class="form-section-label">
+                    <i class="fa-solid fa-flask-vial"></i> Soil Nutrients
+                </div>
+                <div class="form-grid">
+                    <div class="input-card" style="--i: 1">
+                        <label><i class="fa-solid fa-flask-vial"></i> Nitrogen (N)</label>
+                        <input type="number" id="inp_N" name="N" placeholder="0 – 140 kg/ha" required step="any">
+                        <div class="input-hint">Typical: 0–140 kg/ha</div>
+                    </div>
+                    <div class="input-card" style="--i: 2">
+                        <label><i class="fa-solid fa-vial"></i> Phosphorus (P)</label>
+                        <input type="number" id="inp_P" name="P" placeholder="5 – 145 kg/ha" required step="any">
+                        <div class="input-hint">Typical: 5–145 kg/ha</div>
+                    </div>
+                    <div class="input-card" style="--i: 3">
+                        <label><i class="fa-solid fa-vial-circle-check"></i> Potassium (K)</label>
+                        <input type="number" id="inp_K" name="K" placeholder="5 – 205 kg/ha" required step="any">
+                        <div class="input-hint">Typical: 5–205 kg/ha</div>
+                    </div>
+                </div>
+
+                <div class="form-section-label" style="margin-top: 2rem">
+                    <i class="fa-solid fa-cloud-sun-rain"></i> Climate Parameters
+                </div>
+                <div class="form-grid">
+                    <div class="input-card" style="--i: 4">
+                        <label><i class="fa-solid fa-temperature-three-quarters"></i> Temperature</label>
+                        <input type="number" id="inp_temperature" name="temperature" placeholder="8 – 44 °C" required step="any">
+                        <div class="input-hint">Typical: 8–44 °C</div>
+                    </div>
+                    <div class="input-card" style="--i: 5">
+                        <label><i class="fa-solid fa-droplet"></i> Humidity</label>
+                        <input type="number" id="inp_humidity" name="humidity" placeholder="14 – 100 %" required step="any">
+                        <div class="input-hint">Typical: 14–100 %</div>
+                    </div>
+                    <div class="input-card" style="--i: 6">
+                        <label><i class="fa-solid fa-droplet-slash"></i> Soil pH</label>
+                        <input type="number" id="inp_ph" name="ph" placeholder="3.5 – 10" required step="any">
+                        <div class="input-hint">Typical: 3.5–10</div>
+                    </div>
+                    <div class="input-card full-width" style="--i: 7">
+                        <label><i class="fa-solid fa-cloud-showers-heavy"></i> Rainfall</label>
+                        <input type="number" id="inp_rainfall" name="rainfall" placeholder="20 – 300 mm" required step="any">
+                        <div class="input-hint">Annual Average: 20–300 mm</div>
+                    </div>
+                </div>
+
+                <div class="action-zone">
+                    <button type="reset" class="btn-ghost-sm" id="resetBtn">
+                        <i class="fa-solid fa-rotate-left"></i> Reset
+                    </button>
+                    <button type="submit" class="btn-primary magnetic-btn">
+                        <span class="btn-text"><i class="fa-solid fa-microchip"></i> Generate Analysis</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Result Panel -->
+        <div class="result-panel" id="resultPanel">
+            <!-- Idle state -->
+            <div class="result-idle glass-card" id="resultIdle">
+                <div class="idle-icon"><i class="fa-solid fa-seedling"></i></div>
+                <p class="idle-text">Your recommendation will appear here after you submit the form.</p>
+            </div>
+
+            <!-- Result state -->
+            <div class="result-card glass-card hidden" id="resultContainer">
+                <div class="result-badge">Analysis Complete</div>
+                <div class="crop-visual" id="resultIcon">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <h2 id="cropName" class="crop-highlight">—</h2>
+                <p id="cropDescription" class="result-meta">Recommended crop based on multi-parameter environmental alignment.</p>
+                <div class="confidence-wrap">
+                    <span class="confidence-label">Match Confidence</span>
+                    <div class="confidence-bar">
+                        <div class="bar-fill"></div>
+                    </div>
+                    <span class="confidence-pct">99.3%</span>
+                </div>
+                <a href="{{ url_for('predict_page') }}" class="btn-ghost-sm reanalyze">
+                    <i class="fa-solid fa-rotate-left"></i> Analyse Again
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Loader -->
+<div id="loader" class="premium-loader hidden">
+    <div class="loader-content">
+        <div class="loader-circle"></div>
+        <p>Analysing Parameters...</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}

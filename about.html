@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block title %}About — EcoHarvest{% endblock %}
+{% block meta_desc %}Learn how EcoHarvest uses Random Forest, XGBoost and SVM machine learning models to deliver 99.32% accurate crop recommendations.{% endblock %}
+
+{% block content %}
+
+<!-- About Hero -->
+<section class="about-hero">
+    <div class="badge-pill">
+        <i class="fa-solid fa-circle-info"></i> About EcoHarvest
+    </div>
+    <h1 class="about-title">How the <span class="gradient-word">AI works</span></h1>
+    <p class="about-sub">A deep dive into the dataset, models, and technology powering EcoHarvest.</p>
+</section>
+
+<!-- How It Works Timeline -->
+<section class="how-section">
+    <div class="section-header">
+        <div class="section-tag">Process</div>
+        <h2 class="section-title">From soil data to recommendation</h2>
+    </div>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-database"></i></div>
+            <div class="timeline-content glass-card">
+                <h3>1. Data Input</h3>
+                <p>You provide 7 parameters: N, P, K (soil nutrients), temperature, humidity, pH and rainfall. These represent the key agronomic factors that determine crop suitability.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="timeline-content glass-card">
+                <h3>2. Feature Scaling</h3>
+                <p>Inputs are standardised using <code>StandardScaler</code> — transforming values to a common scale so the model is not biased by units (e.g. kg/ha vs °C).</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-brain"></i></div>
+            <div class="timeline-content glass-card">
+                <h3>3. AI Prediction</h3>
+                <p>Our champion <strong>Random Forest</strong> model (99.32% accuracy) classifies the input into one of 22 crop categories using an ensemble of decision trees.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fa-solid fa-seedling"></i></div>
+            <div class="timeline-content glass-card">
+                <h3>4. Result Delivery</h3>
+                <p>The predicted crop name is decoded from the label encoder and returned to you instantly with a contextual icon and confidence indicator.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Model Comparison — Detailed -->
+<section class="models-section">
+    <div class="section-header">
+        <div class="section-tag">Model Performance</div>
+        <h2 class="section-title">3 models trained — 1 champion selected</h2>
+        <p class="section-sub">We benchmarked Random Forest, XGBoost & SVM. The model with highest validation accuracy is automatically saved as the prediction engine.</p>
+    </div>
+
+    <!-- Champion Card – Full Width -->
+    <div class="model-featured glass-card">
+        <div class="model-featured-crown">
+            <i class="fa-solid fa-crown"></i> Champion Model — Deployed in Production
+        </div>
+        <div class="model-featured-body">
+            <div class="model-featured-left">
+                <div class="model-featured-icon"><i class="fa-solid fa-tree"></i></div>
+                <h2 class="model-featured-name">Random Forest</h2>
+                <p class="model-featured-desc">An ensemble of <strong>100 decision trees</strong>, each trained on a random bootstrap sample of the data. Trees vote on the final class — majority wins. This bagging approach dramatically reduces variance and overfitting compared to a single tree.</p>
+                <div class="model-tags">
+                    <span class="model-tag">n_estimators = 100</span>
+                    <span class="model-tag">random_state = 42</span>
+                    <span class="model-tag">Bagging Ensemble</span>
+                    <span class="model-tag">Gini Criterion</span>
+                </div>
+                <div class="model-pros">
+                    <div class="pro-item"><i class="fa-solid fa-check"></i> Robust to outliers and missing features</div>
+                    <div class="pro-item"><i class="fa-solid fa-check"></i> No feature scaling required (we scale anyway for consistency)</div>
+                    <div class="pro-item"><i class="fa-solid fa-check"></i> Provides feature importance rankings</div>
+                    <div class="pro-item"><i class="fa-solid fa-check"></i> Parallelisable training across trees</div>
+                </div>
+            </div>
+            <div class="model-featured-right">
+                <div class="metric-block">
+                    <div class="metric-label">Accuracy</div>
+                    <div class="metric-value-lg">99.32%</div>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill" style="--pct: 99.32%"></div></div>
+                </div>
+                <div class="metric-row-grid">
+                    <div class="metric-mini">
+                        <div class="metric-mini-val">99.26%</div>
+                        <div class="metric-mini-label">F1 Score (Macro)</div>
+                        <div class="metric-bar-outer sm"><div class="metric-bar-fill" style="--pct: 99.26%"></div></div>
+                    </div>
+                    <div class="metric-mini">
+                        <div class="metric-mini-val">99.26%</div>
+                        <div class="metric-mini-label">Precision (Macro)</div>
+                        <div class="metric-bar-outer sm"><div class="metric-bar-fill" style="--pct: 99.26%"></div></div>
+                    </div>
+                    <div class="metric-mini">
+                        <div class="metric-mini-val">99.33%</div>
+                        <div class="metric-mini-label">Recall (Macro)</div>
+                        <div class="metric-bar-outer sm"><div class="metric-bar-fill" style="--pct: 99.33%"></div></div>
+                    </div>
+                    <div class="metric-mini">
+                        <div class="metric-mini-val">99.32%</div>
+                        <div class="metric-mini-label">F1 Score (Weighted)</div>
+                        <div class="metric-bar-outer sm"><div class="metric-bar-fill" style="--pct: 99.32%"></div></div>
+                    </div>
+                </div>
+                <div class="model-verdict champion-verdict">
+                    <i class="fa-solid fa-trophy"></i> Highest accuracy across all metrics — selected as champion
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Runner-up Cards -->
+    <div class="runner-up-grid">
+
+        <!-- XGBoost -->
+        <div class="runner-card glass-card">
+            <div class="runner-header">
+                <div class="runner-icon xgb-icon"><i class="fa-solid fa-bolt"></i></div>
+                <div>
+                    <div class="runner-rank">🥈 Runner-up</div>
+                    <h3 class="runner-name">XGBoost</h3>
+                </div>
+            </div>
+            <p class="runner-desc">Gradient-boosted decision trees that build sequentially, each tree correcting the errors of the last. Uses log-loss as the objective for multi-class classification.</p>
+            <div class="model-tags">
+                <span class="model-tag">eval_metric = mlogloss</span>
+                <span class="model-tag">Boosting Ensemble</span>
+                <span class="model-tag">random_state = 42</span>
+            </div>
+            <div class="runner-metrics">
+                <div class="runner-metric">
+                    <span class="r-label">Accuracy</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill xgb" style="--pct: 98.64%"></div></div>
+                    <span class="r-val">98.64%</span>
+                </div>
+                <div class="runner-metric">
+                    <span class="r-label">F1 (Macro)</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill xgb" style="--pct: 98.59%"></div></div>
+                    <span class="r-val">98.59%</span>
+                </div>
+                <div class="runner-metric">
+                    <span class="r-label">Precision</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill xgb" style="--pct: 98.49%"></div></div>
+                    <span class="r-val">98.49%</span>
+                </div>
+                <div class="runner-metric">
+                    <span class="r-label">Recall</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill xgb" style="--pct: 98.76%"></div></div>
+                    <span class="r-val">98.76%</span>
+                </div>
+                <div class="runner-metric">
+                    <span class="r-label">F1 (Weighted)</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill xgb" style="--pct: 98.63%"></div></div>
+                    <span class="r-val">98.63%</span>
+                </div>
+            </div>
+            <div class="model-pros" style="margin-top:1rem">
+                <div class="pro-item"><i class="fa-solid fa-check"></i> Extremely fast inference</div>
+                <div class="pro-item"><i class="fa-solid fa-check"></i> Strong regularisation (L1 + L2)</div>
+                <div class="pro-item xgb"><i class="fa-solid fa-minus"></i> More hyperparameters to tune</div>
+            </div>
+        </div>
+
+        <!-- SVM -->
+        <div class="runner-card glass-card">
+            <div class="runner-header">
+                <div class="runner-icon svm-icon"><i class="fa-solid fa-vector-square"></i></div>
+                <div>
+                    <div class="runner-rank">🥉 Third Place</div>
+                    <h3 class="runner-name">Support Vector Machine</h3>
+                </div>
+            </div>
+            <p class="runner-desc">Finds the maximum-margin hyperplane separating crop classes in a high-dimensional feature space. Uses an RBF kernel by default with probability calibration enabled.</p>
+            <div class="model-tags">
+                <span class="model-tag">kernel = RBF</span>
+                <span class="model-tag">probability = True</span>
+                <span class="model-tag">random_state = 42</span>
+            </div>
+            <div class="runner-metrics">
+                <div class="runner-metric">
+                    <span class="r-label">Accuracy</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill svm" style="--pct: 96.82%"></div></div>
+                    <span class="r-val">96.82%</span>
+                </div>
+                <div class="runner-metric">
+                    <span class="r-label">F1 (Macro)</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill svm" style="--pct: 96.66%"></div></div>
+                    <span class="r-val">96.66%</span>
+                </div>
+                <div class="runner-metric">
+                    <span class="r-label">Precision</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill svm" style="--pct: 96.77%"></div></div>
+                    <span class="r-val">96.77%</span>
+                </div>
+                <div class="runner-metric">
+                    <span class="r-label">Recall</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill svm" style="--pct: 96.95%"></div></div>
+                    <span class="r-val">96.95%</span>
+                </div>
+                <div class="runner-metric">
+                    <span class="r-label">F1 (Weighted)</span>
+                    <div class="metric-bar-outer"><div class="metric-bar-fill svm" style="--pct: 96.80%"></div></div>
+                    <span class="r-val">96.80%</span>
+                </div>
+            </div>
+            <div class="model-pros" style="margin-top:1rem">
+                <div class="pro-item"><i class="fa-solid fa-check"></i> Very effective in high-dimensional space</div>
+                <div class="pro-item"><i class="fa-solid fa-check"></i> Memory-efficient (uses support vectors)</div>
+                <div class="pro-item xgb"><i class="fa-solid fa-minus"></i> Slower training on large datasets</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Comparison Table -->
+    <div class="compare-table-wrap glass-card">
+        <div class="compare-table-header">
+            <i class="fa-solid fa-table-columns"></i> Full Metric Comparison (Validation Set — 440 samples)
+        </div>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Accuracy</th>
+                    <th>F1 (Macro)</th>
+                    <th>F1 (Weighted)</th>
+                    <th>Precision (Macro)</th>
+                    <th>Recall (Macro)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="champion-row">
+                    <td><i class="fa-solid fa-tree"></i> Random Forest</td>
+                    <td class="highlight-val">99.32%</td>
+                    <td>99.26%</td>
+                    <td>99.32%</td>
+                    <td>99.26%</td>
+                    <td>99.33%</td>
+                    <td><span class="status-badge champion-badge"><i class="fa-solid fa-crown"></i> Champion</span></td>
+                </tr>
+                <tr>
+                    <td><i class="fa-solid fa-bolt"></i> XGBoost</td>
+                    <td>98.64%</td>
+                    <td>98.59%</td>
+                    <td>98.63%</td>
+                    <td>98.49%</td>
+                    <td>98.76%</td>
+                    <td><span class="status-badge runner-badge">Runner-up</span></td>
+                </tr>
+                <tr>
+                    <td><i class="fa-solid fa-vector-square"></i> SVM</td>
+                    <td>96.82%</td>
+                    <td>96.66%</td>
+                    <td>96.80%</td>
+                    <td>96.77%</td>
+                    <td>96.95%</td>
+                    <td><span class="status-badge third-badge">3rd Place</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="compare-footnote">
+            All models trained on 1,760 samples (80%) · Evaluated on 440 samples (20%) · random_state=42 · StandardScaler preprocessing applied
+        </div>
+    </div>
+</section>
+
+
+<!-- Dataset Info -->
+<section class="dataset-section">
+    <div class="section-header">
+        <div class="section-tag">Dataset</div>
+        <h2 class="section-title">Training data at a glance</h2>
+    </div>
+    <div class="dataset-grid">
+        <div class="dataset-card glass-card">
+            <i class="fa-solid fa-table"></i>
+            <h4>2,200 Samples</h4>
+            <p>100 samples per crop across 22 varieties, ensuring balanced class distribution.</p>
+        </div>
+        <div class="dataset-card glass-card">
+            <i class="fa-solid fa-sliders"></i>
+            <h4>7 Features</h4>
+            <p>N, P, K, Temperature, Humidity, Soil pH, Rainfall — the standard agronomic parameter set.</p>
+        </div>
+        <div class="dataset-card glass-card">
+            <i class="fa-solid fa-tags"></i>
+            <h4>22 Classes</h4>
+            <p>Grains, legumes, fruits, fibres and beverages — a comprehensive crop taxonomy.</p>
+        </div>
+        <div class="dataset-card glass-card">
+            <i class="fa-solid fa-percent"></i>
+            <h4>80/20 Split</h4>
+            <p>80% training, 20% validation. Random state fixed for full reproducibility.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Parameter Reference Table -->
+<section class="params-section">
+    <div class="section-header">
+        <div class="section-tag">Reference</div>
+        <h2 class="section-title">Valid parameter ranges</h2>
+    </div>
+    <div class="table-wrapper glass-card">
+        <table class="params-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Unit</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Mean</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><i class="fa-solid fa-flask-vial"></i> Nitrogen</td><td>kg/ha</td><td>0</td><td>140</td><td>50.6</td></tr>
+                <tr><td><i class="fa-solid fa-vial"></i> Phosphorus</td><td>kg/ha</td><td>5</td><td>145</td><td>53.4</td></tr>
+                <tr><td><i class="fa-solid fa-vial-circle-check"></i> Potassium</td><td>kg/ha</td><td>5</td><td>205</td><td>48.1</td></tr>
+                <tr><td><i class="fa-solid fa-temperature-three-quarters"></i> Temperature</td><td>°C</td><td>8.8</td><td>43.7</td><td>25.6</td></tr>
+                <tr><td><i class="fa-solid fa-droplet"></i> Humidity</td><td>%</td><td>14.3</td><td>99.9</td><td>71.5</td></tr>
+                <tr><td><i class="fa-solid fa-droplet-slash"></i> Soil pH</td><td>—</td><td>3.5</td><td>9.9</td><td>6.5</td></tr>
+                <tr><td><i class="fa-solid fa-cloud-showers-heavy"></i> Rainfall</td><td>mm</td><td>20.2</td><td>298.6</td><td>103.5</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Tech Stack -->
+<section class="tech-section">
+    <div class="section-header">
+        <div class="section-tag">Technology</div>
+        <h2 class="section-title">Built with</h2>
+    </div>
+    <div class="tech-grid">
+        <div class="tech-pill glass-card"><i class="fa-brands fa-python"></i> Python 3</div>
+        <div class="tech-pill glass-card"><i class="fa-solid fa-fire"></i> Flask</div>
+        <div class="tech-pill glass-card"><i class="fa-solid fa-chart-bar"></i> scikit-learn</div>
+        <div class="tech-pill glass-card"><i class="fa-solid fa-bolt"></i> XGBoost</div>
+        <div class="tech-pill glass-card"><i class="fa-solid fa-table-cells"></i> Pandas</div>
+        <div class="tech-pill glass-card"><i class="fa-solid fa-infinity"></i> NumPy</div>
+        <div class="tech-pill glass-card"><i class="fa-brands fa-html5"></i> HTML5</div>
+        <div class="tech-pill glass-card"><i class="fa-brands fa-css3-alt"></i> CSS3</div>
+        <div class="tech-pill glass-card"><i class="fa-brands fa-js"></i> JavaScript</div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="cta-card">
+        <div class="cta-glow-left"></div>
+        <div class="cta-glow-right"></div>
+        <h2>Ready to see it in action?</h2>
+        <p>Try the live prediction engine with your own field data.</p>
+        <a href="{{ url_for('predict_page') }}" class="btn-primary btn-large">
+            <i class="fa-solid fa-seedling"></i> Go to Predict
+        </a>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Animate metric bars when they scroll into view
+    const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.metric-bar-fill').forEach(bar => {
+                    const styleAttr = bar.getAttribute('style') || '';
+                    const match = styleAttr.match(/--pct:\s*([\d.]+%)/);
+                    if (match) bar.style.width = match[1];
+                });
+                barObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.model-featured, .runner-card, .compare-table-wrap').forEach(el => {
+        barObserver.observe(el);
+    });
+</script>
+{% endblock %}

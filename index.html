@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}EcoHarvest | AI-Powered Crop Intelligence{% endblock %}
+{% block meta_desc %}EcoHarvest — Precision crop recommendation using advanced machine learning models trained on soil and environmental data.{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-page">
+    <div class="hero-content">
+        <div class="badge-pill animate-fade-up" style="--delay: 0s">
+            <i class="fa-solid fa-microchip"></i> AI-Powered Agronomy Platform
+        </div>
+        <h1 class="hero-headline animate-fade-up" style="--delay: 0.1s">
+            Grow Smarter<br>with <span class="gradient-word">AI Precision</span>
+        </h1>
+        <p class="hero-sub animate-fade-up" style="--delay: 0.2s">
+            Enter your soil and environmental parameters. Our 99.32% accurate Random Forest model recommends the optimal crop for maximum yield.
+        </p>
+        <div class="hero-cta animate-fade-up" style="--delay: 0.3s">
+            <a href="{{ url_for('predict_page') }}" class="btn-primary">
+                <i class="fa-solid fa-flask"></i> Start Analysis
+            </a>
+            <a href="{{ url_for('about') }}" class="btn-ghost">
+                How it works <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="hero-visual animate-fade-up" style="--delay: 0.4s">
+        <div class="visual-orb">
+            <div class="orb-ring orb-ring-1"></div>
+            <div class="orb-ring orb-ring-2"></div>
+            <div class="orb-ring orb-ring-3"></div>
+            <div class="orb-core">
+                <i class="fa-solid fa-leaf"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar">
+    <div class="stats-inner">
+        <div class="stat-item">
+            <span class="stat-num">99.3%</span>
+            <span class="stat-label">Model Accuracy</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-num">22</span>
+            <span class="stat-label">Crop Varieties</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-num">2,200</span>
+            <span class="stat-label">Training Samples</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-num">7</span>
+            <span class="stat-label">Input Parameters</span>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="section-header">
+        <div class="section-tag">Why EcoHarvest</div>
+        <h2 class="section-title">Built for modern agriculture</h2>
+        <p class="section-sub">Combining real-world agronomy data with state-of-the-art machine learning.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card" style="--i: 1">
+            <div class="feature-icon"><i class="fa-solid fa-brain"></i></div>
+            <h3>Random Forest AI</h3>
+            <p>Trained across 3 models — Random Forest, XGBoost & SVM — we auto-select the champion for your data.</p>
+        </div>
+        <div class="feature-card" style="--i: 2">
+            <div class="feature-icon"><i class="fa-solid fa-flask-vial"></i></div>
+            <h3>7-Parameter Analysis</h3>
+            <p>Analyses Nitrogen, Phosphorus, Potassium, Temperature, Humidity, Soil pH and Rainfall simultaneously.</p>
+        </div>
+        <div class="feature-card" style="--i: 3">
+            <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h3>Input Validation</h3>
+            <p>Smart range-checking warns you before submission if any value is outside scientifically valid bounds.</p>
+        </div>
+        <div class="feature-card" style="--i: 4">
+            <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+            <h3>Instant Results</h3>
+            <p>Sub-second predictions served via a fast Python Flask backend. No waiting, no page reloads.</p>
+        </div>
+        <div class="feature-card" style="--i: 5">
+            <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <h3>High Accuracy</h3>
+            <p>99.32% classification accuracy on validation data — confident recommendations you can trust.</p>
+        </div>
+        <div class="feature-card" style="--i: 6">
+            <div class="feature-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+            <h3>Fully Responsive</h3>
+            <p>Premium experience on any device — desktop, tablet, or mobile. Built with modern CSS.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Crop Showcase -->
+<section class="crops-section">
+    <div class="section-header">
+        <div class="section-tag">Supported Crops</div>
+        <h2 class="section-title">22 crop varieties covered</h2>
+    </div>
+    <div class="crops-scroll">
+        {% set crops = [
+            ('rice', 'fa-bowl-rice'), ('maize', 'fa-wheat-awn'), ('chickpea', 'fa-seedling'),
+            ('kidneybeans', 'fa-bong'), ('pigeonpeas', 'fa-clover'), ('mothbeans', 'fa-bug'),
+            ('mungbean', 'fa-leaf'), ('blackgram', 'fa-circle-nodes'), ('lentil', 'fa-plate-wheat'),
+            ('pomegranate', 'fa-apple-whole'), ('banana', 'fa-lemon'), ('mango', 'fa-tree'),
+            ('grapes', 'fa-wine-glass'), ('watermelon', 'fa-cloud'), ('muskmelon', 'fa-sun'),
+            ('apple', 'fa-apple-whole'), ('orange', 'fa-clover'), ('papaya', 'fa-tree'),
+            ('coconut', 'fa-circle-half-stroke'), ('cotton', 'fa-shirt'), ('jute', 'fa-scroll'), ('coffee', 'fa-mug-hot')
+        ] %}
+        {% for name, icon in crops %}
+        <div class="crop-pill">
+            <i class="fa-solid {{ icon }}"></i>
+            <span>{{ name|capitalize }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-card">
+        <div class="cta-glow-left"></div>
+        <div class="cta-glow-right"></div>
+        <h2>Ready to optimise your harvest?</h2>
+        <p>Enter your field parameters and get an AI-powered crop recommendation in seconds.</p>
+        <a href="{{ url_for('predict_page') }}" class="btn-primary btn-large">
+            <i class="fa-solid fa-seedling"></i> Run Crop Analysis
+        </a>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Trigger reveal animations on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(el => el.isIntersecting && el.target.classList.add('revealed'));
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.feature-card, .stat-item, .crop-pill').forEach(el => observer.observe(el));
+</script>
+{% endblock %}
