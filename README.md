@@ -1,6 +1,3 @@
-<div align="center">
-
-<img src="static/images/logo.png" alt="EcoHarvest Logo" width="100" style="border-radius: 20px"/>
 
 # EcoHarvest 🌱
 
