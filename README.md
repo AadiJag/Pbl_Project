@@ -1,241 +1,223 @@
-<div align="center">
+# EcoHarvest — Crop Recommendation System
 
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-2.x-FF6B35?style=flat-square&logo=flask&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-1.x-3CADA8?style=flat-square)
+![Model Accuracy](https://img.shields.io/badge/Model%20Accuracy-99.32%25-2d6a4f?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-7B68EE?style=flat-square)
 
-# EcoHarvest 🌱
+EcoHarvest is a machine learning web application that recommends the most suitable crop for a given set of soil and climate conditions. The user enters seven agronomic parameters, the backend runs a pre-trained classification model, and the recommended crop is returned in under a second.
 
-### AI-Powered Crop Recommendation System
-
-[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![Flask](https://img.shields.io/badge/Flask-2.x-FF6B35?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com)
-[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
-[![XGBoost](https://img.shields.io/badge/XGBoost-1.x-3CADA8?style=for-the-badge)](https://xgboost.readthedocs.io)
-[![Accuracy](https://img.shields.io/badge/Model%20Accuracy-99.32%25-52b788?style=for-the-badge)](https://github.com)
-[![License](https://img.shields.io/badge/License-MIT-a78bfa?style=for-the-badge)](LICENSE)
-
-**A precision agriculture platform that recommends the optimal crop based on soil composition and climate data — powered by an ensemble of machine learning models.**
-
-[🚀 Live Demo](#running-locally) · [📊 Model Details](#ml-models) · [📁 Project Structure](#project-structure)
+This project was built as a practical demonstration of an end-to-end ML pipeline: data preprocessing, multi-model training, champion selection, and serving predictions through a Flask web interface.
 
 ---
 
-</div>
+## Overview
 
-## ✨ Overview
+The system accepts the following inputs:
 
-EcoHarvest takes 7 agronomic input parameters and predicts the best-suited crop from **22 varieties** using a **Random Forest Classifier** trained to 99.32% accuracy. The platform features a premium multi-page web interface with real-time input validation, animated UI components, and a full model performance breakdown.
+- Nitrogen (N) content of the soil in kg/ha
+- Phosphorus (P) content of the soil in kg/ha
+- Potassium (K) content of the soil in kg/ha
+- Average temperature in degrees Celsius
+- Relative humidity as a percentage
+- Soil pH value
+- Annual rainfall in millimetres
 
----
-
-## 🖼️ Screenshots
-
-| Home Page | Prediction Engine | About & Model Details |
-|---|---|---|
-| Hero section with animated orb, stats bar, and feature grid | Two-panel form with real-time field validation and live result card | ML model comparison with animated metric bars and comparison table |
-
----
-
-## 🔥 Features
-
-- **99.32% Accurate** — Random Forest Champion model with full benchmark against XGBoost and SVM
-- **Multi-Page Design** — Home, Predict, and About pages with shared navigation
-- **Real-Time Validation** — Data-driven input range checking with amber inline warnings and toast notifications
-- **7-Parameter Analysis** — Nitrogen, Phosphorus, Potassium, Temperature, Humidity, Soil pH, Rainfall
-- **22 Crop Classes** — Grains, legumes, fruits, fibres and beverages
-- **Premium UI** — Glassmorphism, aurora background animations, magnetic button, reveal-on-scroll effects
-- **Responsive** — Fully mobile-friendly layout across all pages
-- **Auto-Select Champion** — Training script benchmarks 3 models and saves the best automatically
+Based on these values, the model predicts which of 22 possible crops is best suited to those conditions. The prediction is made by the champion model selected during training — currently Random Forest, which achieved 99.32% accuracy on the held-out validation set.
 
 ---
 
-## 🤖 ML Models
+## Dataset
 
-Three models were trained and evaluated on an 80/20 train-test split with `StandardScaler` preprocessing:
+The training data is sourced from the public Crop Recommendation Dataset, containing 2,200 labelled samples across 22 crop types. Each crop has exactly 100 samples, making the dataset perfectly balanced.
 
-| Model | Accuracy | F1 (Macro) | Precision (Macro) | Recall (Macro) | Status |
-|---|---|---|---|---|---|
-| 🏆 **Random Forest** | **99.32%** | **99.26%** | **99.26%** | **99.33%** | ✅ Champion |
-| ⚡ XGBoost | 98.64% | 98.59% | 98.49% | 98.76% | Runner-up |
-| 🔷 SVM (RBF Kernel) | 96.82% | 96.66% | 96.77% | 96.95% | 3rd Place |
-
-> **Training config:** `n_estimators=100`, `random_state=42`, `eval_metric=mlogloss`, `probability=True`  
-> **Dataset split:** 1,760 training samples · 440 validation samples
+- Total samples: 2,200
+- Features: 7 numerical agronomic parameters
+- Target classes: 22 (rice, maize, chickpea, kidney beans, pigeon peas, moth beans, mung bean, black gram, lentil, pomegranate, banana, mango, grapes, watermelon, muskmelon, apple, orange, papaya, coconut, cotton, jute, coffee)
+- Train/test split: 80% training (1,760 samples), 20% validation (440 samples)
+- Random state fixed at 42 for reproducibility
 
 ---
 
-## 📦 Dataset
+## Machine Learning Workflow
 
-| Property | Value |
-|---|---|
-| Source | Crop Recommendation Dataset |
-| File | `Crop_recommendation.csv` |
-| Total Samples | 2,200 |
-| Samples per Crop | 100 |
-| Features | 7 (N, P, K, Temperature, Humidity, pH, Rainfall) |
-| Target Classes | 22 crop varieties |
+### Step 1 — Data Loading
 
-### Parameter Ranges
+The CSV file is loaded with Pandas. Features (N, P, K, temperature, humidity, ph, rainfall) are separated from the target label column.
 
-| Parameter | Unit | Min | Max | Mean |
-|---|---|---|---|---|
-| Nitrogen (N) | kg/ha | 0 | 140 | 50.6 |
-| Phosphorus (P) | kg/ha | 5 | 145 | 53.4 |
-| Potassium (K) | kg/ha | 5 | 205 | 48.1 |
-| Temperature | °C | 8.8 | 43.7 | 25.6 |
-| Humidity | % | 14.3 | 99.9 | 71.5 |
-| Soil pH | — | 3.5 | 9.9 | 6.5 |
-| Rainfall | mm | 20.2 | 298.6 | 103.5 |
+### Step 2 — Label Encoding
+
+The string crop labels are converted to integer class indices using scikit-learn's `LabelEncoder`. This is required for XGBoost, which expects numeric targets, and is applied uniformly across all three models for consistency.
+
+### Step 3 — Train/Test Split
+
+Data is split 80/20 using `train_test_split` with `random_state=42`. The split is stratified by default in this balanced dataset context.
+
+### Step 4 — Feature Scaling
+
+All features are standardised using `StandardScaler` (mean = 0, unit variance). The scaler is fitted on the training set only and applied to both train and test sets. This step is critical for SVM and also keeps the comparison across models fair.
+
+### Step 5 — Model Training
+
+Three classifiers are trained on the scaled training set:
+
+- **Random Forest** — 100 estimators, Gini criterion, bagging ensemble
+- **XGBoost** — gradient-boosted trees, mlogloss objective, sequential ensemble
+- **SVM** — RBF kernel, probability calibration enabled
+
+### Step 6 — Champion Selection
+
+Each model is evaluated on the held-out test set using accuracy score. The model with the highest accuracy is automatically labelled "champion" and serialised to disk.
+
+### Step 7 — Serialisation
+
+Three objects are saved as pickle files:
+
+- `champion_model.pkl` — the best-performing classifier
+- `scaler.pkl` — the fitted StandardScaler instance
+- `label_encoder.pkl` — the fitted LabelEncoder for decoding predictions
+
+The champion model name is also written to `champion_name.txt` for reference.
+
+### Step 8 — Serving Predictions
+
+On application startup, Flask loads all three pickle files into memory. When a POST request is received at `/api/predict`, the input values are extracted, scaled using the loaded scaler, passed to the model for prediction, and the resulting class index is decoded back to a crop name using the label encoder. The result is returned as JSON.
 
 ---
 
-## 🗂️ Project Structure
+## Model Results
+
+All models were evaluated on the same 440-sample held-out validation set.
+
+| Model         | Accuracy | F1 (Macro) | Precision (Macro) | Recall (Macro) |
+|---------------|----------|------------|-------------------|----------------|
+| Random Forest | 99.32%   | 99.26%     | 99.26%            | 99.33%         |
+| XGBoost       | 98.64%   | 98.59%     | 98.49%            | 98.76%         |
+| SVM           | 96.82%   | 96.66%     | 96.77%            | 96.95%         |
+
+Random Forest was selected as the champion in every run across all metrics.
+
+---
+
+## File Architecture
 
 ```
 pbl/
-├── app.py                      # Flask application — routes & prediction API
-├── train_model.py              # ML training script — benchmarks 3 models, saves champion
-├── Crop_recommendation.csv     # Dataset (2,200 samples, 22 crop classes)
-├── champion_model.pkl          # Saved Random Forest champion model
-├── champion_name.txt           # Name of the saved champion ("Random Forest")
-├── label_encoder.pkl           # LabelEncoder for crop class decoding
-├── scaler.pkl                  # StandardScaler fitted on training data
-├── static/
-│   ├── css/
-│   │   └── style.css           # Full design system (glassmorphism, animations, responsive)
-│   ├── js/
-│   │   └── script.js           # Form logic, validation, API calls, UI interactions
-│   └── images/
-│       └── logo.png            # App icon / favicon
-└── templates/
-    ├── base.html               # Shared layout (nav, footer, aurora background)
-    ├── index.html              # Home page (hero, stats, features, crop showcase)
-    ├── predict.html            # Prediction page (form + live result panel)
-    └── about.html              # About page (timeline, model details, dataset info)
+|
+|-- app.py                      # Flask application — routes, model loading, prediction API
+|-- train_model.py              # Training script — runs all three models, saves champion
+|-- Crop_recommendation.csv     # Raw dataset (2,200 rows, 8 columns)
+|
+|-- champion_model.pkl          # Serialised champion classifier (generated by train_model.py)
+|-- scaler.pkl                  # Fitted StandardScaler (generated by train_model.py)
+|-- label_encoder.pkl           # Fitted LabelEncoder (generated by train_model.py)
+|-- champion_name.txt           # Name of the selected champion model
+|
+|-- templates/
+|   |-- base.html               # Shared layout — navigation, footer, font imports
+|   |-- index.html              # Home page — hero section, stats strip, feature grid, crop list
+|   |-- predict.html            # Prediction form — 7 inputs, result panel, validation feedback
+|   |-- about.html              # About page — how it works, model comparison, dataset details
+|
+|-- static/
+|   |-- css/
+|   |   |-- style.css           # Full design system — typography, layout, components, responsive
+|   |
+|   |-- js/
+|   |   |-- script.js           # Prediction form logic — validation, async fetch, result display
+|   |
+|   |-- images/
+|       |-- logo.png            # Application logo (used in nav and browser tab)
+|
+|-- .gitignore
+|-- README.md
 ```
 
 ---
 
-## ⚙️ Getting Started
+## Application Routes
+
+| Route          | Method   | Description                                                  |
+|----------------|----------|--------------------------------------------------------------|
+| `/`            | GET      | Renders the home page                                        |
+| `/predict`     | GET      | Renders the prediction form page                             |
+| `/about`       | GET      | Renders the about/documentation page                         |
+| `/api/predict` | POST     | Accepts JSON with 7 parameters, returns crop recommendation  |
+
+The `/api/predict` endpoint expects a JSON body with keys: `N`, `P`, `K`, `temperature`, `humidity`, `ph`, `rainfall`. It returns `{"success": true, "prediction": "Rice", "message": "..."}` on success, or `{"success": false, "error": "..."}` on failure.
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.9 or later
 - pip
 
-### 1. Clone the repository
+### Installation
+
+Clone or download the project folder, then install dependencies:
 
 ```bash
-git clone https://github.com/your-username/ecoharvest.git
-cd ecoharvest
+pip install flask numpy scikit-learn xgboost pandas
 ```
 
-### 2. Install dependencies
+### Training the Model (optional)
+
+The repo includes pre-trained pickle files so you can skip this step. If you want to retrain from scratch:
 
 ```bash
-pip install flask scikit-learn xgboost numpy pandas
+python train_model.py
 ```
 
-### 3. Train the model
+This will overwrite `champion_model.pkl`, `scaler.pkl`, `label_encoder.pkl`, and `champion_name.txt` with freshly trained versions.
 
-This benchmarks all 3 models and saves the champion automatically:
+### Running the Application
 
 ```bash
-python3 train_model.py
+python app.py
 ```
 
-> This generates `champion_model.pkl`, `label_encoder.pkl`, and `scaler.pkl`.
-
-### 4. Run the app
-
-```bash
-python3 app.py
-```
-
-Then open **[http://127.0.0.1:5001](http://127.0.0.1:5001)** in your browser.
+The server starts on `http://localhost:5001`. Open that URL in your browser to use the application.
 
 ---
 
-## 🌐 API Reference
+## Input Parameter Reference
 
-### `POST /api/predict`
+| Parameter   | Unit  | Min  | Max   | Typical Mean |
+|-------------|-------|------|-------|--------------|
+| Nitrogen    | kg/ha | 0    | 140   | 50.6         |
+| Phosphorus  | kg/ha | 5    | 145   | 53.4         |
+| Potassium   | kg/ha | 5    | 205   | 48.1         |
+| Temperature | C     | 8.8  | 43.7  | 25.6         |
+| Humidity    | %     | 14.3 | 99.9  | 71.5         |
+| Soil pH     | —     | 3.5  | 9.9   | 6.5          |
+| Rainfall    | mm    | 20.2 | 298.6 | 103.5        |
 
-Accepts JSON with the 7 agronomic parameters and returns the recommended crop.
-
-**Request:**
-```json
-{
-  "N": 90,
-  "P": 42,
-  "K": 43,
-  "temperature": 20.8,
-  "humidity": 82.0,
-  "ph": 6.5,
-  "rainfall": 202.9
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "prediction": "Rice",
-  "message": "Recommended crop: rice."
-}
-```
-
-**Error Response:**
-```json
-{
-  "success": false,
-  "error": "Model not loaded. Run train_model.py first."
-}
-```
+The frontend validates all inputs against these ranges before submission and displays a warning if any value falls outside the expected bounds. Out-of-range values are flagged but do not block the prediction — they serve as a sanity check rather than a hard gate.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-| Layer | Technologies |
-|---|---|
-| **Backend** | Python 3, Flask |
-| **ML** | scikit-learn (Random Forest, SVM), XGBoost |
-| **Data** | Pandas, NumPy |
-| **Frontend** | HTML5, CSS3 (Vanilla), JavaScript (ES6+) |
-| **Fonts & Icons** | Google Fonts (Inter, Poppins), Font Awesome 6 |
+| Layer       | Technology                                          |
+|-------------|-----------------------------------------------------|
+| Backend     | Python 3, Flask                                     |
+| ML Models   | scikit-learn (Random Forest, SVM), XGBoost          |
+| Data        | Pandas, NumPy                                       |
+| Frontend    | HTML5, CSS3, Vanilla JavaScript                     |
+| Typography  | DM Sans, DM Serif Display (Google Fonts)            |
+| Icons       | Font Awesome 6                                      |
 
----
-
-## 🎨 Design System
-
-The UI follows an **"Emerald Frost"** dark theme:
-
-- **Primary:** `#52b788` (Emerald green)
-- **Background:** `#040d0c` (Deep dark)
-- **Glass cards:** `rgba(255,255,255,0.03)` with `backdrop-filter: blur(40px)`
-- **Accent:** `#ffaa32` (Amber for warnings)
-- **Animations:** Aurora blobs, orbital rings, reveal-on-scroll, magnetic button
+No frontend frameworks or build tools are used. The entire frontend is plain HTML, CSS, and JavaScript.
 
 ---
 
-## 🔮 Roadmap
+## Notes
 
-- [ ] Add crop growing tips per recommendation
-- [ ] Geolocation-based climate autofill
-- [ ] User history and recommendation log
-- [ ] Export results as PDF report
-- [ ] Deploy to production with Gunicorn + Nginx
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
----
-
-<div align="center">
-
-Made with 🌱 by [Rahul Anand](https://github.com/your-username) & [Aaditya Jagdish](https://github.com/your-username)
-
-*EcoHarvest — Growing intelligence, one prediction at a time.*
-
-</div>
+- The pickle files were generated with a specific version of scikit-learn. If you load them with a different version, you may see an `InconsistentVersionWarning`. The model will still work in most cases, but retraining with your installed version eliminates the warning.
+- The application runs in Flask's development mode by default (`debug=True`). Do not expose this to the public internet without switching to a production WSGI server such as Gunicorn.
+- All training, validation, and model selection logic lives entirely in `train_model.py`. The `app.py` file only handles loading, serving, and inference — it does not perform any training.
