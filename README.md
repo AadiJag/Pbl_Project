@@ -234,7 +234,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 <div align="center">
 
-Made with 🌱 by [Rahul Anand](https://github.com/your-username)
+Made with 🌱 by [Rahul Anand](https://github.com/your-username) & [Aaditya Jagdish](https://github.com/your-username)
 
 *EcoHarvest — Growing intelligence, one prediction at a time.*
 
