@@ -1,22 +1,26 @@
 {% extends "base.html" %}
 
 {% block title %}Predict — EcoHarvest{% endblock %}
-{% block meta_desc %}Enter your soil and climate parameters to get an AI-powered crop recommendation from EcoHarvest.{% endblock %}
+{% block meta_desc %}Enter your soil composition and climate data to get a data-driven crop recommendation from EcoHarvest's ML model.{% endblock %}
 
 {% block content %}
 
 <section class="predict-page">
     <div class="predict-header">
-        <div class="badge-pill">
-            <i class="fa-solid fa-flask-vial"></i> AI Analysis Engine
+        <div class="predict-header-left">
+            <div class="tag" style="margin-bottom: 0.6rem;">Soil &amp; Climate Analysis</div>
+            <h1 class="predict-title">Crop Recommendation</h1>
+            <p class="predict-sub">Enter your field parameters below. All 7 values are required for an accurate prediction.</p>
         </div>
-        <h1 class="predict-title">Crop Recommendation</h1>
-        <p class="predict-sub">Enter your soil composition and climate data below for a precision recommendation.</p>
+        <div class="chip">
+            <i class="fa-solid fa-circle-check" style="font-size:0.7rem;"></i>
+            Random Forest — 99.16% accuracy
+        </div>
     </div>
 
     <div class="predict-wrapper">
         <!-- Form Panel -->
-        <div class="form-panel glass-card">
+        <div class="form-panel">
             <form id="predictionForm">
                 <div class="form-section-label">
                     <i class="fa-solid fa-flask-vial"></i> Soil Nutrients
@@ -24,53 +28,53 @@
                 <div class="form-grid">
                     <div class="input-card" style="--i: 1">
                         <label><i class="fa-solid fa-flask-vial"></i> Nitrogen (N)</label>
-                        <input type="number" id="inp_N" name="N" placeholder="0 – 140 kg/ha" required step="any">
+                        <input type="number" id="inp_N" name="N" placeholder="e.g. 82" required step="any">
                         <div class="input-hint">Typical: 0–140 kg/ha</div>
                     </div>
                     <div class="input-card" style="--i: 2">
                         <label><i class="fa-solid fa-vial"></i> Phosphorus (P)</label>
-                        <input type="number" id="inp_P" name="P" placeholder="5 – 145 kg/ha" required step="any">
+                        <input type="number" id="inp_P" name="P" placeholder="e.g. 42" required step="any">
                         <div class="input-hint">Typical: 5–145 kg/ha</div>
                     </div>
                     <div class="input-card" style="--i: 3">
                         <label><i class="fa-solid fa-vial-circle-check"></i> Potassium (K)</label>
-                        <input type="number" id="inp_K" name="K" placeholder="5 – 205 kg/ha" required step="any">
+                        <input type="number" id="inp_K" name="K" placeholder="e.g. 43" required step="any">
                         <div class="input-hint">Typical: 5–205 kg/ha</div>
                     </div>
                 </div>
 
-                <div class="form-section-label" style="margin-top: 2rem">
+                <div class="form-section-label" style="margin-top: 1.75rem;">
                     <i class="fa-solid fa-cloud-sun-rain"></i> Climate Parameters
                 </div>
                 <div class="form-grid">
                     <div class="input-card" style="--i: 4">
                         <label><i class="fa-solid fa-temperature-three-quarters"></i> Temperature</label>
-                        <input type="number" id="inp_temperature" name="temperature" placeholder="8 – 44 °C" required step="any">
+                        <input type="number" id="inp_temperature" name="temperature" placeholder="e.g. 25.5" required step="any">
                         <div class="input-hint">Typical: 8–44 °C</div>
                     </div>
                     <div class="input-card" style="--i: 5">
                         <label><i class="fa-solid fa-droplet"></i> Humidity</label>
-                        <input type="number" id="inp_humidity" name="humidity" placeholder="14 – 100 %" required step="any">
+                        <input type="number" id="inp_humidity" name="humidity" placeholder="e.g. 71" required step="any">
                         <div class="input-hint">Typical: 14–100 %</div>
                     </div>
                     <div class="input-card" style="--i: 6">
                         <label><i class="fa-solid fa-droplet-slash"></i> Soil pH</label>
-                        <input type="number" id="inp_ph" name="ph" placeholder="3.5 – 10" required step="any">
+                        <input type="number" id="inp_ph" name="ph" placeholder="e.g. 6.5" required step="any">
                         <div class="input-hint">Typical: 3.5–10</div>
                     </div>
                     <div class="input-card full-width" style="--i: 7">
-                        <label><i class="fa-solid fa-cloud-showers-heavy"></i> Rainfall</label>
-                        <input type="number" id="inp_rainfall" name="rainfall" placeholder="20 – 300 mm" required step="any">
-                        <div class="input-hint">Annual Average: 20–300 mm</div>
+                        <label><i class="fa-solid fa-cloud-showers-heavy"></i> Annual Rainfall</label>
+                        <input type="number" id="inp_rainfall" name="rainfall" placeholder="e.g. 186" required step="any">
+                        <div class="input-hint">Annual average: 20–300 mm</div>
                     </div>
                 </div>
 
                 <div class="action-zone">
-                    <button type="reset" class="btn-ghost-sm" id="resetBtn">
+                    <button type="reset" class="btn-ghost" id="resetBtn">
                         <i class="fa-solid fa-rotate-left"></i> Reset
                     </button>
                     <button type="submit" class="btn-primary magnetic-btn">
-                        <span class="btn-text"><i class="fa-solid fa-microchip"></i> Generate Analysis</span>
+                        <span class="btn-text"><i class="fa-solid fa-magnifying-glass-chart"></i> Analyse &amp; Recommend</span>
                     </button>
                 </div>
             </form>
@@ -78,29 +82,29 @@
 
         <!-- Result Panel -->
         <div class="result-panel" id="resultPanel">
-            <!-- Idle state -->
-            <div class="result-idle glass-card" id="resultIdle">
+            <!-- Idle -->
+            <div class="result-idle" id="resultIdle">
                 <div class="idle-icon"><i class="fa-solid fa-seedling"></i></div>
-                <p class="idle-text">Your recommendation will appear here after you submit the form.</p>
+                <p class="idle-text">Fill in the form and click <strong>Analyse</strong> — your crop recommendation will show up here.</p>
             </div>
 
-            <!-- Result state -->
-            <div class="result-card glass-card hidden" id="resultContainer">
+            <!-- Result -->
+            <div class="result-card hidden" id="resultContainer">
                 <div class="result-badge">Analysis Complete</div>
                 <div class="crop-visual" id="resultIcon">
                     <i class="fa-solid fa-seedling"></i>
                 </div>
                 <h2 id="cropName" class="crop-highlight">—</h2>
-                <p id="cropDescription" class="result-meta">Recommended crop based on multi-parameter environmental alignment.</p>
+                <p id="cropDescription" class="result-meta">Recommended for your soil and climate conditions.</p>
                 <div class="confidence-wrap">
-                    <span class="confidence-label">Match Confidence</span>
+                    <span class="confidence-label">Model Confidence</span>
                     <div class="confidence-bar">
                         <div class="bar-fill"></div>
                     </div>
-                    <span class="confidence-pct">99.3%</span>
+                    <span class="confidence-pct">99.16%</span>
                 </div>
-                <a href="{{ url_for('predict_page') }}" class="btn-ghost-sm reanalyze">
-                    <i class="fa-solid fa-rotate-left"></i> Analyse Again
+                <a href="{{ url_for('predict_page') }}" class="btn-ghost">
+                    <i class="fa-solid fa-rotate-left"></i> Run another
                 </a>
             </div>
         </div>
@@ -111,7 +115,7 @@
 <div id="loader" class="premium-loader hidden">
     <div class="loader-content">
         <div class="loader-circle"></div>
-        <p>Analysing Parameters...</p>
+        <p>Analysing parameters…</p>
     </div>
 </div>
 
