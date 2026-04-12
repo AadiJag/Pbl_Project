@@ -1,3 +1,8 @@
+/* =====================================================
+   ECOHARVEST — Design System v2
+   Designed to feel like a real developer made it
+   ===================================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap');
 
 :root {
@@ -176,15 +181,15 @@ h1, h2, h3, .serif {
    ===================================================== */
 .hero-page {
     min-height: calc(100vh - var(--nav-h));
-    display: flex; align-items: center;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; text-align: center;
     padding: 5rem 2rem 4rem;
-    max-width: 1180px; margin: 0 auto;
-    gap: 5rem;
+    max-width: 860px; margin: 0 auto;
 }
-.hero-content { flex: 1; }
+.hero-content { width: 100%; }
 
 .hero-eyebrow {
-    display: flex; align-items: center; gap: 1rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
     margin-bottom: 1.5rem;
 }
 .hero-eyebrow-line {
@@ -205,10 +210,10 @@ h1, h2, h3, .serif {
 
 .hero-sub {
     font-size: 1.05rem; color: var(--ink-muted);
-    line-height: 1.75; max-width: 480px; margin-bottom: 2.5rem;
+    line-height: 1.75; max-width: 560px; margin: 0 auto 2.5rem;
     font-weight: 400;
 }
-.hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+.hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center; }
 
 /* Hero image / illustration area */
 .hero-visual {
@@ -222,7 +227,12 @@ h1, h2, h3, .serif {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
     padding: 2.5rem;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    align-content: center;
+    justify-content: center;
     position: relative;
 }
 .illus-card {
@@ -245,15 +255,7 @@ h1, h2, h3, .serif {
     font-size: 0.7rem; color: var(--green);
     font-weight: 500;
 }
-.illus-result {
-    grid-column: span 2;
-    background: var(--green);
-    border: none; color: #fff;
-    align-items: flex-start; justify-content: center;
-    gap: 0.2rem;
-}
-.illus-result .illus-card-label { color: rgba(255,255,255,0.6); }
-.illus-result .illus-card-value { color: #fff; font-size: 1.6rem; }
+
 .illus-badge {
     position: absolute; top: -12px; right: 20px;
     background: var(--green-pale); color: var(--green);
@@ -321,7 +323,7 @@ h1, h2, h3, .serif {
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
 }
-.features-section .container { }
+
 .features-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); gap: 2px;
@@ -338,7 +340,7 @@ h1, h2, h3, .serif {
 .feature-card:hover { background: var(--bg); }
 .feature-num {
     font-family: 'DM Serif Display', serif;
-    font-size: 2rem; color: var(--border-dark);
+    font-size: 2rem; color: var(--green);
     margin-bottom: 1.25rem;
     display: block;
 }
@@ -416,7 +418,7 @@ h1, h2, h3, .serif {
     display: flex; align-items: flex-start; justify-content: space-between;
     gap: 2rem; flex-wrap: wrap;
 }
-.predict-header-left { }
+
 .predict-title {
     font-size: 2.4rem; letter-spacing: -0.02em;
     color: var(--ink); margin-bottom: 0.5rem;
